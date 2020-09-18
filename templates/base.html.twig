@@ -3,10 +3,61 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('css/cirrus.css') }}">
+        {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        <div class="header header-fixed unselectable header-animated">
+            <div class="header-brand">
+                <div class="nav-item no-hover">
+                    <a><h6 class="title">NEBBIA</h6></a>
+                </div>
+                <div class="nav-item nav-btn" id="header-btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <div class="header-nav" id="header-menu">
+                <div class="nav-center">
+                    <div class="nav-item">
+                        <a href="{{ path('article_index') }}">Articles</a>
+                    </div>
+                </div>
+                <div class="nav-right">
+                    <div class="nav-item">
+                        <a href="{{ path('app_register') }}">Register</a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="{{ path('app_login') }}">Log in</a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="{{ path('app_logout') }}">Log out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 60px">
+            {% block body %}{% endblock %}
+        </div>
+        {% block javascripts %}
+            <script>
+            // Get all the nav-btns in the page
+            let navBtns = document.querySelectorAll('.nav-btn');
+
+            // Add an event handler for all nav-btns to enable the dropdown functionality
+            navBtns.forEach(function (ele) {
+                ele.addEventListener('click', function() {
+                    // Get the dropdown-menu associated with this nav button (insert the id of your menu)
+                    let dropDownMenu = document.getElementById('MENU_ID_HERE');
+
+                    // Toggle the nav-btn and the dropdown menu
+                    ele.classList.toggle('active');
+                    dropDownMenu.classList.toggle('active');
+                });
+            });
+            </script>
+        {% endblock %}
     </body>
 </html>

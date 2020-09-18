@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Articles{% endblock %}
+
+{% block body %}
+    <div class="content">
+        {{ form_start(search_form) }}
+            {{ form_widget(search_form) }}
+        {{ form_end(search_form) }}
+        
+        <h1 class="u-text-center">Articles</h1>
+
+        <ul class="menu u-box">
+            {% for article in articles %}
+                <li class="menu-item">
+                    <a href="{{ path('article_show', {'slug': article.slug}) }}">{{ article.title }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    
+    <a class="u-text-center" href="{{ path('article_new') }}">Create a new article</a>
+{% endblock %}

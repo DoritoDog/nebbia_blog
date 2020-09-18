@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ article.title }}{% endblock %}
+
+{% block body %}
+
+<div class="content">
+
+  {% if article.introductionImage %}
+    <img class="u-center" src="{{ asset(article.introductionImage) }}">
+  {% endif %}
+
+  <h1 class="u-text-center">{{ article.title }}</h1>
+  {% if article.author %}
+    <h6 class="u-text-center">Written by {{ article.author.username }} on {{ article.createdAt|date("m/d/Y") }}</h6>
+  {% endif %}
+  <h5 style="margin-top: 50px">{{ article.perex }}</h5>
+  <p>{{ article.body }}</p>
+
+  {# Tag cloud #}
+  <script src="{{ asset('js/tagsCloud.js') }}"></script>
+  <link rel="stylesheet" href="{{ asset('css/tagsCloud.css') }}">
+  <div id="tagscloud">
+  <h4>Tags</h4>
+      {% for tag in article.tags %}
+          <a href="#" class="tagc1">{{ tag.name }}</a>
+          <a href="#" class="tagc2">{{ tag.name }}</a>
+          <a href="#" class="tagc3">{{ tag.name }}</a>
+      {% endfor %}
+  </div>
+
+  <h4 class="u-text-center">Comments <span class="tag bg-primary">{{ article.comments|length }}</span></h4>
+  {{ form_start(comment_form) }}
+      {{ form_widget(comment_form) }}
+  {{ form_end(comment_form) }}
+  <ol>
+  {% for comment in article.comments %}
+    <li>
+    {% if comment.author %}
+      {{ comment.author.username }}
+    {% else %}
+      Anonymous
+    {% endif %}
+    :{{ comment.body }}</li>
+  {% endfor %}
+  </ol>
+</div>
+
+{% endblock %}
